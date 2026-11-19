@@ -1,1 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=800"/>
+<title>Pokédex</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Exo+2:wght@800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:800px;height:480px;overflow:hidden;background:#cc0000;font-family:'Exo 2',sans-serif}
+.pokedex{width:800px;height:480px;background:#cc0000;display:grid;grid-template-columns:268px 1fr;border:4px solid #880000;position:relative}
+.top-deco{position:absolute;top:10px;left:12px;display:flex;align-items:center;gap:8px;z-index:10}
+.camera{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#88ccff,#0044cc);border:3px solid #000;box-shadow:0 0 0 2px #444}
+.lights{display:flex;gap:5px}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid #000}
+.dot.r{background:#ff2200}.dot.y{background:#ffcc00}.dot.g{background:#00cc44}
+.hinge{position:absolute;top:0;bottom:0;left:268px;width:6px;background:#880000;z-index:5;border-left:2px solid #660000;border-right:2px solid #660000}
 
+.left{background:#cc0000;padding:50px 12px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative}
+.left-meta{display:flex;justify-content:space-between;width:100%;padding:0 2px}
+.meta-txt{font-family:'Orbitron',monospace;font-size:15px;font-weight:900;color:#ffee00;text-shadow:1px 1px 0 #000}
+.screen-bezel{width:236px;background:#222;border:5px solid #000;border-radius:6px;padding:5px;box-shadow:0 4px 0 #770000;flex-shrink:0}
+.screen-inner{background:#fff;border:3px solid #000;border-radius:2px;width:100%;height:190px;display:flex;align-items:center;justify-content:center;position:relative}
+#poke-img{width:170px;height:170px;object-fit:contain;position:absolute}
+.screen-led{width:12px;height:12px;border-radius:50%;background:#00ff44;border:2px solid #000;margin:5px auto 0}
+.types-row{display:flex;gap:8px}
+.tpill{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:3px solid #000;border-radius:3px;color:#fff}
+.dpad-wrap{position:absolute;bottom:12px;left:12px}
+.dpad{width:52px;height:52px;position:relative}
+.dpad-h,.dpad-v{position:absolute;background:#111;border:2px solid #555;border-radius:2px}
+.dpad-h{top:33%;left:0;right:0;height:34%}
+.dpad-v{left:33%;top:0;bottom:0;width:34%}
+.dpad-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:15px;height:15px;background:#333;border-radius:50%;border:2px solid #555}
+.buttons-wrap{position:absolute;bottom:16px;right:12px;display:flex;gap:8px}
+.btn-circle{width:28px;height:28px;border-radius:50%;border:3px solid #000;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:11px;font-weight:900;color:#fff}
+
+.right{background:#fff;margin-left:6px;padding:10px 14px 10px 14px;display:flex;flex-direction:column;gap:0;height:100%}
+.name-row{border-bottom:3px solid #000;padding-bottom:6px;margin-bottom:8px;flex-shrink:0}
+#poke-name{font-family:'Orbitron',monospace;font-size:30px;font-weight:900;text-transform:uppercase;color:#000;line-height:1;letter-spacing:1px}
+.num-genus{display:flex;gap:10px;align-items:center;margin-top:3px}
+.num-tag{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:#000}
+.genus-tag{font-size:14px;font-weight:900;color:#000;text-transform:uppercase;letter-spacing:1px}
+.desc-box{background:#fff;border:3px solid #000;border-radius:3px;padding:8px 12px;position:relative;flex-shrink:0;margin-bottom:10px}
+.desc-box-label{position:absolute;top:-11px;left:8px;background:#fff;font-size:11px;font-weight:900;color:#000;letter-spacing:2px;padding:0 4px;text-transform:uppercase}
+#poke-desc{font-size:14px;line-height:1.5;color:#000;font-weight:900;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.stats-section{flex:1;display:flex;flex-direction:column;margin-bottom:8px}
+.stats-header{font-size:14px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#000;margin-bottom:5px;flex-shrink:0}
+.stats-list{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.stat-row{display:flex;align-items:center;gap:7px}
+.stat-lbl{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;color:#000;width:38px;text-align:right;flex-shrink:0}
+.stat-bar-horiz{flex:1;height:20px;background:#eee;border:2.5px solid #000;border-radius:3px;overflow:hidden}
+.stat-fill-h{height:100%}
+.stat-num{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:#000;width:34px;text-align:right;flex-shrink:0}
+.info-row{display:flex;gap:7px;flex-wrap:nowrap;flex-shrink:0}
+.chip{border:2.5px solid #000;border-radius:3px;padding:6px 10px;font-size:14px;font-weight:900;color:#000;background:#fff;white-space:nowrap;flex:1;text-align:center}
+</style>
+</head>
+<body>
+<div class="pokedex">
+  <div class="top-deco">
+    <div class="camera"></div>
+    <div class="lights"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+  </div>
+  <div class="hinge"></div>
+  <div class="left">
+    <div class="left-meta">
+      <span class="meta-txt" id="num-stamp">#001</span>
+      <span class="meta-txt" style="font-size:11px;max-width:120px;text-align:right" id="genus-tag-left"></span>
+    </div>
+    <div class="screen-bezel">
+      <div class="screen-inner">
+        <img id="poke-img" src="" alt="" width="170" height="170"/>
+      </div>
+      <div class="screen-led"></div>
+    </div>
+    <div class="types-row" id="types-row"></div>
+    <div class="dpad-wrap"><div class="dpad"><div class="dpad-h"></div><div class="dpad-v"></div><div class="dpad-center"></div></div></div>
+    <div class="buttons-wrap">
+      <div class="btn-circle" style="background:#0044cc">A</div>
+      <div class="btn-circle" style="background:#cc0000">B</div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="name-row">
+      <div id="poke-name">—</div>
+      <div class="num-genus">
+        <span class="num-tag" id="num-tag2"></span>
+        <span class="genus-tag" id="genus-tag"></span>
+      </div>
+    </div>
+    <div class="desc-box">
+      <div class="desc-box-label">POKÉDEX ENTRY</div>
+      <p id="poke-desc">—</p>
+    </div>
+    <div class="stats-section">
+      <div class="stats-header">Base Stats</div>
+      <div class="stats-list" id="stats-list"></div>
+    </div>
+    <div class="info-row" id="info-row"></div>
+  </div>
+</div>
+
+<script>
+const SL={hp:'HP',attack:'ATK',defense:'DEF','special-attack':'SpA','special-defense':'SpD',speed:'SPD'};
+const SC={hp:'#dd0000',attack:'#dd5500',defense:'#0044cc','special-attack':'#7700bb','special-defense':'#007722',speed:'#0088aa'};
+const TC={fire:'#dd2200',water:'#0055cc',grass:'#226600',electric:'#bb8800',psychic:'#cc0055',ice:'#0088aa',dragon:'#2200cc',dark:'#111',fairy:'#aa0066',normal:'#556655',fighting:'#aa0000',flying:'#1133aa',poison:'#7700aa',ground:'#885500',rock:'#665500',bug:'#335500',ghost:'#330077',steel:'#334455',unknown:'#333'};
+
+const id = Math.floor(Math.random() * 1010) + 1;
+const imgEl = document.getElementById('poke-img');
+
+// Step 1: load tiny sprite immediately — this is a few KB, shows in <1s
+const spriteUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png';
+imgEl.src = spriteUrl;
+imgEl.style.imageRendering = 'pixelated';
+
+// Step 2: fetch full artwork in background, swap when ready
+const artUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + id + '.png';
+const artImg = new Image();
+artImg.onload = function() {
+  imgEl.src = artUrl;
+  imgEl.style.imageRendering = 'auto';
+};
+artImg.src = artUrl;
+
+async function load() {
+  try {
+    const [pr, sr] = await Promise.all([
+      fetch('https://pokeapi.co/api/v2/pokemon/' + id).then(r => r.json()),
+      fetch('https://pokeapi.co/api/v2/pokemon-species/' + id).then(r => r.json())
+    ]);
+
+    document.getElementById('poke-name').textContent = pr.name;
+    const numStr = '#' + String(pr.id).padStart(3, '0');
+    document.getElementById('num-stamp').textContent = numStr;
+    document.getElementById('num-tag2').textContent = numStr;
+    const g = (sr.genera || []).find(g => g.language.name === 'en');
+    const genus = g ? g.genus : '';
+    document.getElementById('genus-tag').textContent = genus;
+    document.getElementById('genus-tag-left').textContent = genus;
+
+    document.getElementById('types-row').innerHTML = pr.types.map(t =>
+      '<div class="tpill" style="background:' + (TC[t.type.name] || '#333') + '">' + t.type.name + '</div>'
+    ).join('');
+
+    const en = (sr.flavor_text_entries || []).filter(e => e.language.name === 'en');
+    const pk = en[Math.floor(Math.random() * Math.min(en.length, 6))];
+    document.getElementById('poke-desc').textContent = pk ? pk.flavor_text.replace(/[\f\n\r]/g, ' ') : 'No entry found.';
+
+    document.getElementById('stats-list').innerHTML = pr.stats.map(s => {
+      const p = Math.min(100, Math.round((s.base_stat / 255) * 100));
+      return '<div class="stat-row"><div class="stat-lbl">' + (SL[s.stat.name] || s.stat.name) + '</div><div class="stat-bar-horiz"><div class="stat-fill-h" style="width:' + p + '%;background:' + (SC[s.stat.name] || '#000') + '"></div></div><div class="stat-num">' + s.base_stat + '</div></div>';
+    }).join('');
+
+    const ht = (pr.height / 10).toFixed(1);
+    const wt = (pr.weight / 10).toFixed(1);
+    const gen = (sr.generation?.name || '').replace('generation-', 'Gen ').toUpperCase();
+    const hab = sr.habitat?.name ? sr.habitat.name.charAt(0).toUpperCase() + sr.habitat.name.slice(1) : 'Unknown';
+    document.getElementById('info-row').innerHTML =
+      '<div class="chip">Height: ' + ht + ' m</div>' +
+      '<div class="chip">Weight: ' + wt + ' kg</div>' +
+      '<div class="chip">' + (gen || '—') + '</div>' +
+      '<div class="chip">Habitat: ' + hab + '</div>';
+
+  } catch(e) {
+    document.getElementById('poke-name').textContent = 'ERROR';
+    document.getElementById('poke-desc').textContent = 'Could not load. Check connection.';
+  }
+}
+load();
+</script>
+</body>
+</html>
