@@ -8,51 +8,59 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:800px;height:480px;overflow:hidden;background:#cc0000;font-family:'Exo 2',sans-serif}
-.pokedex{width:800px;height:480px;background:#cc0000;display:grid;grid-template-columns:268px 1fr;border:4px solid #880000;position:relative}
-.top-deco{position:absolute;top:10px;left:12px;display:flex;align-items:center;gap:8px;z-index:10}
-.camera{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#88ccff,#0044cc);border:3px solid #000;box-shadow:0 0 0 2px #444}
+.pokedex{width:800px;height:480px;background:#cc0000;display:grid;grid-template-columns:376px 1fr;border:4px solid #880000;position:relative}
+.top-deco{position:absolute;top:8px;left:12px;display:flex;align-items:center;gap:8px;z-index:10}
+.camera{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#88ccff,#0044cc);border:3px solid #000;box-shadow:0 0 0 2px #444}
 .lights{display:flex;gap:5px}
-.dot{width:12px;height:12px;border-radius:50%;border:2px solid #000}
+.dot{width:11px;height:11px;border-radius:50%;border:2px solid #000}
 .dot.r{background:#ff2200}.dot.y{background:#ffcc00}.dot.g{background:#00cc44}
-.hinge{position:absolute;top:0;bottom:0;left:268px;width:6px;background:#880000;z-index:5;border-left:2px solid #660000;border-right:2px solid #660000}
+.hinge{position:absolute;top:0;bottom:0;left:376px;width:6px;background:#880000;z-index:5;border-left:2px solid #660000;border-right:2px solid #660000}
 
-.left{background:#cc0000;padding:50px 12px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative}
-.left-meta{display:flex;justify-content:space-between;width:100%;padding:0 2px}
-.meta-txt{font-family:'Orbitron',monospace;font-size:15px;font-weight:900;color:#ffee00;text-shadow:1px 1px 0 #000}
-.screen-bezel{width:236px;background:#222;border:5px solid #000;border-radius:6px;padding:5px;box-shadow:0 4px 0 #770000;flex-shrink:0}
-.screen-inner{background:#fff;border:3px solid #000;border-radius:2px;width:100%;height:190px;display:flex;align-items:center;justify-content:center;position:relative}
-#poke-img{width:170px;height:170px;object-fit:contain;position:absolute}
-.screen-led{width:12px;height:12px;border-radius:50%;background:#00ff44;border:2px solid #000;margin:5px auto 0}
-.types-row{display:flex;gap:8px}
-.tpill{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:3px solid #000;border-radius:3px;color:#fff}
-.dpad-wrap{position:absolute;bottom:12px;left:12px}
-.dpad{width:52px;height:52px;position:relative}
+/* 左側：ポケモン画像を主役に大幅拡大 */
+.left{background:#cc0000;padding:42px 12px 10px 12px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;position:relative}
+.left-meta{display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px}
+.meta-txt{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;color:#ffee00;text-shadow:1px 1px 0 #000}
+.screen-bezel{width:344px;background:#222;border:5px solid #000;border-radius:8px;padding:6px;box-shadow:0 4px 0 #770000;flex-shrink:0}
+.screen-inner{background:#fff;border:3px solid #000;border-radius:3px;width:100%;height:306px;display:flex;align-items:center;justify-content:center;position:relative}
+#poke-img{width:290px;height:290px;object-fit:contain}
+.screen-led{width:10px;height:10px;border-radius:50%;background:#00ff44;border:2px solid #000;margin:4px auto 0}
+
+/* 下部：タイプとミニコントローラーを1行に集約 */
+.left-bottom{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
+.dpad{width:38px;height:38px;position:relative;flex-shrink:0}
 .dpad-h,.dpad-v{position:absolute;background:#111;border:2px solid #555;border-radius:2px}
 .dpad-h{top:33%;left:0;right:0;height:34%}
 .dpad-v{left:33%;top:0;bottom:0;width:34%}
-.dpad-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:15px;height:15px;background:#333;border-radius:50%;border:2px solid #555}
-.buttons-wrap{position:absolute;bottom:16px;right:12px;display:flex;gap:8px}
-.btn-circle{width:28px;height:28px;border-radius:50%;border:3px solid #000;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:11px;font-weight:900;color:#fff}
+.dpad-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:11px;height:11px;background:#333;border-radius:50%;border:2px solid #555}
+.types-row{display:flex;gap:6px;justify-content:center}
+.tpill{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border:3px solid #000;border-radius:4px;color:#fff}
+.buttons-wrap{display:flex;gap:6px;flex-shrink:0}
+.btn-circle{width:24px;height:24px;border-radius:50%;border:2.5px solid #000;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:10px;font-weight:900;color:#fff}
 
-.right{background:#fff;margin-left:6px;padding:10px 14px 10px 14px;display:flex;flex-direction:column;gap:0;height:100%}
-.name-row{border-bottom:3px solid #000;padding-bottom:6px;margin-bottom:8px;flex-shrink:0}
-#poke-name{font-family:'Orbitron',monospace;font-size:30px;font-weight:900;text-transform:uppercase;color:#000;line-height:1;letter-spacing:1px}
-.num-genus{display:flex;gap:10px;align-items:center;margin-top:3px}
+/* 右側：情報＆コンパクトな2列ステータス */
+.right{background:#fff;margin-left:6px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;height:100%}
+.name-row{border-bottom:3px solid #000;padding-bottom:6px;flex-shrink:0}
+#poke-name{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;text-transform:uppercase;color:#000;line-height:1.05;letter-spacing:1px}
+.num-genus{display:flex;gap:10px;align-items:center;margin-top:4px}
 .num-tag{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:#000}
-.genus-tag{font-size:14px;font-weight:900;color:#000;text-transform:uppercase;letter-spacing:1px}
-.desc-box{background:#fff;border:3px solid #000;border-radius:3px;padding:8px 12px;position:relative;flex-shrink:0;margin-bottom:10px}
-.desc-box-label{position:absolute;top:-11px;left:8px;background:#fff;font-size:11px;font-weight:900;color:#000;letter-spacing:2px;padding:0 4px;text-transform:uppercase}
-#poke-desc{font-size:14px;line-height:1.5;color:#000;font-weight:900;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.stats-section{flex:1;display:flex;flex-direction:column;margin-bottom:8px}
-.stats-header{font-size:14px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#000;margin-bottom:5px;flex-shrink:0}
-.stats-list{flex:1;display:flex;flex-direction:column;justify-content:space-between}
-.stat-row{display:flex;align-items:center;gap:7px}
-.stat-lbl{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;color:#000;width:38px;text-align:right;flex-shrink:0}
-.stat-bar-horiz{flex:1;height:20px;background:#eee;border:2.5px solid #000;border-radius:3px;overflow:hidden}
+.genus-tag{font-size:13px;font-weight:900;color:#000;text-transform:uppercase;letter-spacing:1px}
+
+.desc-box{background:#fff;border:3px solid #000;border-radius:4px;padding:10px 12px;position:relative;flex:1;display:flex;align-items:center;margin:10px 0}
+.desc-box-label{position:absolute;top:-10px;left:8px;background:#fff;font-size:11px;font-weight:900;color:#000;letter-spacing:2px;padding:0 4px;text-transform:uppercase}
+#poke-desc{font-size:15px;line-height:1.45;color:#000;font-weight:800;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}
+
+/* Base Stats を2列×3行のコンパクト表示に */
+.stats-section{flex-shrink:0;margin-bottom:10px;border:2.5px solid #000;border-radius:4px;padding:6px 8px;background:#f8f8f8}
+.stats-header{font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#000;margin-bottom:4px}
+.stats-list{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px}
+.stat-row{display:flex;align-items:center;gap:5px}
+.stat-lbl{font-family:'Orbitron',monospace;font-size:11px;font-weight:900;color:#000;width:32px;text-align:right;flex-shrink:0}
+.stat-bar-horiz{flex:1;height:12px;background:#e0e0e0;border:2px solid #000;border-radius:2px;overflow:hidden}
 .stat-fill-h{height:100%}
-.stat-num{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:#000;width:34px;text-align:right;flex-shrink:0}
-.info-row{display:flex;gap:7px;flex-wrap:nowrap;flex-shrink:0}
-.chip{border:2.5px solid #000;border-radius:3px;padding:6px 10px;font-size:14px;font-weight:900;color:#000;background:#fff;white-space:nowrap;flex:1;text-align:center}
+.stat-num{font-family:'Orbitron',monospace;font-size:11px;font-weight:900;color:#000;width:28px;text-align:right;flex-shrink:0}
+
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0}
+.chip{border:2.5px solid #000;border-radius:4px;padding:5px 8px;font-size:13px;font-weight:900;color:#000;background:#fff;white-space:nowrap;text-align:center}
 </style>
 </head>
 <body>
@@ -65,19 +73,21 @@ html,body{width:800px;height:480px;overflow:hidden;background:#cc0000;font-famil
   <div class="left">
     <div class="left-meta">
       <span class="meta-txt" id="num-stamp">#001</span>
-      <span class="meta-txt" style="font-size:11px;max-width:120px;text-align:right" id="genus-tag-left"></span>
+      <span class="meta-txt" style="font-size:12px;max-width:220px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="genus-tag-left"></span>
     </div>
     <div class="screen-bezel">
       <div class="screen-inner">
-        <img id="poke-img" src="" alt="" width="170" height="170"/>
+        <img id="poke-img" src="" alt="" width="290" height="290"/>
       </div>
       <div class="screen-led"></div>
     </div>
-    <div class="types-row" id="types-row"></div>
-    <div class="dpad-wrap"><div class="dpad"><div class="dpad-h"></div><div class="dpad-v"></div><div class="dpad-center"></div></div></div>
-    <div class="buttons-wrap">
-      <div class="btn-circle" style="background:#0044cc">A</div>
-      <div class="btn-circle" style="background:#cc0000">B</div>
+    <div class="left-bottom">
+      <div class="dpad"><div class="dpad-h"></div><div class="dpad-v"></div><div class="dpad-center"></div></div>
+      <div class="types-row" id="types-row"></div>
+      <div class="buttons-wrap">
+        <div class="btn-circle" style="background:#0044cc">A</div>
+        <div class="btn-circle" style="background:#cc0000">B</div>
+      </div>
     </div>
   </div>
   <div class="right">
@@ -108,19 +118,8 @@ const TC={fire:'#dd2200',water:'#0055cc',grass:'#226600',electric:'#bb8800',psyc
 const id = Math.floor(Math.random() * 1010) + 1;
 const imgEl = document.getElementById('poke-img');
 
-// Step 1: load tiny sprite immediately — this is a few KB, shows in <1s
-const spriteUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png';
-imgEl.src = spriteUrl;
-imgEl.style.imageRendering = 'pixelated';
-
-// Step 2: fetch full artwork in background, swap when ready
-const artUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + id + '.png';
-const artImg = new Image();
-artImg.onload = function() {
-  imgEl.src = artUrl;
-  imgEl.style.imageRendering = 'auto';
-};
-artImg.src = artUrl;
+// 最初から高画質な公式イラストを直接読み込み
+imgEl.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + id + '.png';
 
 async function load() {
   try {
